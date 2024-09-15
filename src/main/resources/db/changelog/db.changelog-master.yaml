@@ -1,0 +1,123 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1726427312074-1
+      author: makba
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: event_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1726427312074-2
+      author: makba
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: users_id_seq
+            startValue: 1
+  - changeSet:
+      id: 1726427312074-3
+      author: makba
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: event_pkey
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: location
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: applicant
+                  type: VARCHAR(128)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: comment
+                  type: VARCHAR(1000)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: is_online
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  name: start_date
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: end_date
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: is_outlook
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  name: fk_user_id
+                  type: INT
+            tableName: event
+  - changeSet:
+      id: 1726427312074-4
+      author: makba
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: users_pkey
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: VARCHAR(50)
+            tableName: users
+  - changeSet:
+      id: 1726427312074-5
+      author: makba
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: users_username_key
+            tableName: users
+  - changeSet:
+      id: 1726427312074-6
+      author: makba
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: fk_user_id
+            baseTableName: event
+            constraintName: event_fk_user_id_fkey
+            onDelete: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+
